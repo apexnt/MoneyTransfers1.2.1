@@ -1,4 +1,3 @@
-import javax.swing.JOptionPane
 
 fun main() {
     val amount = 25500000
