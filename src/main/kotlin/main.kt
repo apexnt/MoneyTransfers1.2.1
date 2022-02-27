@@ -1,12 +1,21 @@
 fun main() {
-    val amount = 800000
+    val amount = 8500000
     val minimumCommission = 3500
     val transferFee = 75
     val commission: Int
-    if (amount <= 470000) {
+    val rub: Int
+    val kopek: Int
+
+    if (amount < 470000) {
         commission = minimumCommission
-    } else{
+    } else {
         commission = amount * transferFee / 10000
     }
-    println("Комиссия за перевод: " + commission + " коп.")
+    rub = commission / 100
+    kopek = commission - (rub * 100)
+        println("Комиссия за перевод: " + rub + "руб. " + kopek + " коп.")
 }
+
+
+
+
