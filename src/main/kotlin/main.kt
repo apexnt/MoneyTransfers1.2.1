@@ -2,7 +2,7 @@ const val MINIMUM_COMMISSION = 35_00.0
 const val TRANSFER_FEE = (0.75 / 100)
 
 fun main() {
-    println("Добро пажаловать в ''переводы ВКонтакте''")
+    println("Добро пажаловать в \"переводы ВКонтакте\"")
     println("Комиссия за перевод 0.75% от суммы перевода, минимум 35 руб.")
     print("Введите сумму перевода: ")
     val amount = readLine()?.toInt() ?: return
