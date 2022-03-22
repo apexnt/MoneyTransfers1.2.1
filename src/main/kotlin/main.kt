@@ -7,6 +7,7 @@ const val MAX_AMOUNT_TRANSFER_MONTH_CARDS = 600_000_00
 const val MAX_AMOUNT_TRANSFER_VKPAY = 15_000_00
 const val MAX_AMOUNT_TRANSFER_MONTH_VKPAY = 40_000_00
 
+
 fun main() {
     println("Добро пажаловать в \"переводы ВКонтакте\"")
     print("Выберите тип карты/счета используемых для перевода:")
