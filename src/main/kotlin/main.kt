@@ -10,7 +10,7 @@ const val MAX_AMOUNT_TRANSFER_MONTH_VKPAY = 40_000_00
 fun main() {
     println("Добро пажаловать в \"переводы ВКонтакте\"")
     print("Выберите тип карты/счета используемых для перевода:")
-    print("Для Master Card и Maestro введиете - 1, для Visa и Мир - 2, для VK Pay - 3: ")
+    print("Для Master Card и Maestro введите - 1, для Visa и Мир - 2, для VK Pay - 3: ")
     val paymentCardType = readLine()?.toInt() ?: return
     val outPaymentCardType = transferConditionsTypeOfCard(paymentCardType)
 
@@ -26,7 +26,7 @@ fun main() {
     val limits = checkingLimits(paymentCardType, amountTransferKop, amountTransferKop)
 
     if (!limits) {
-        println("Превышен лимит на перевод. Попробуйте другой способ перевода")
+        println("Превышен лимит на перевод. Попробуйте другой способ перевода.")
         return
     }
     val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop, limits)
