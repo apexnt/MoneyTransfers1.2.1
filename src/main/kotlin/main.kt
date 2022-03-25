@@ -31,7 +31,7 @@ fun main() {
         return
     }
 
-    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop,)
+    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop)
 
     val outCommission = transformationCommissionOfText(commission)
 
@@ -69,7 +69,7 @@ fun checkingLimits(paymentCardType: Int, amountTransferKop: Int, amountOfPastTra
     }
 }
 
-fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int,): Double {
+fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int): Double {
     return when {
         paymentCardType == 1 && amountOfPastTransfersKop >= LIMIT_MASTERCARD_MAESTRO -> {
             amountTransferKop * TRANSFER_FEE_MASTERCARD_MAESTRO + 20_00
