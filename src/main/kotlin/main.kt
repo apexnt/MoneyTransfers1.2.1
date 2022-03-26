@@ -1,6 +1,7 @@
 const val MINIMUM_COMMISSION_VISA_MIR = 35_00.0
 const val TRANSFER_FEE_VISA_MIR = (0.75 / 100)
 const val TRANSFER_FEE_MASTERCARD_MAESTRO = (0.6 / 100)
+const val ADDITIONAL_TRANSFER_FEE_MASTERCARD_MAESTRO = 20_00.0
 const val LIMIT_MASTERCARD_MAESTRO = 75_000_00.0
 const val MAX_AMOUNT_TRANSFER_DAY_CARDS = 150_000_00
 const val MAX_AMOUNT_TRANSFER_MONTH_CARDS = 600_000_00
@@ -31,7 +32,7 @@ fun main() {
         return
     }
 
-    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop)
+    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop,)
 
     val outCommission = transformationCommissionOfText(commission)
 
@@ -69,10 +70,10 @@ fun checkingLimits(paymentCardType: Int, amountTransferKop: Int, amountOfPastTra
     }
 }
 
-fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int): Double {
+fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int,): Double {
     return when {
         paymentCardType == 1 && amountOfPastTransfersKop >= LIMIT_MASTERCARD_MAESTRO -> {
-            amountTransferKop * TRANSFER_FEE_MASTERCARD_MAESTRO + 20_00
+            amountTransferKop * TRANSFER_FEE_MASTERCARD_MAESTRO + ADDITIONAL_TRANSFER_FEE_MASTERCARD_MAESTRO
         }
         paymentCardType == 2 -> {
             var commissionVisaMir = amountTransferKop * TRANSFER_FEE_VISA_MIR
