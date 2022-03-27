@@ -17,7 +17,7 @@ class MainKtTest {
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
         //assert
-        assertEquals(true, result)
+        assertEquals(false, result)
     }
 
     @Test
