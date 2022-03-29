@@ -34,10 +34,11 @@ fun main() {
         return
     }
 
-    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop,)
+    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop)
 
     val outCommission = transformationCommissionOfText(commission)
 
+    println(outCommission)
     println("Спасибо за использование \"переводы ВКонтакте\".")
 }
 
@@ -56,24 +57,6 @@ fun transferConditionsTypeOfCard(paymentCardType: Int): String {
     }
 }
 
-
-//fun transferConditionsTypeOfCard(paymentCardType: Int) {
-//    when (paymentCardType) {
-//        1 -> {
-//            println("За переводы с карт Mastercard и Maestro комиссия не взимается при сумме перевода до 75 000 руб. ")
-//            println("в календарный месяц, в иных случаях - 0,6% + 20 руб. ")
-//            println("Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц")
-//        }
-//        2 -> {
-//            println("Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц")
-//        }
-//        else -> println(
-//            "Комиссия за переводы на счет VK Pay - не взимается. Максимальная сумма перевода 15 000 руб. " +
-//                    "за один раз и 40 000 руб. в месяц."
-//        )
-//    }
-//}
-
 fun checkingLimits(paymentCardType: Int, amountTransferKop: Int, amountOfPastTransfersKop: Int): Boolean {
     return when {
         paymentCardType == 1 && amountTransferKop > MAX_AMOUNT_TRANSFER_DAY_CARDS
@@ -88,7 +71,7 @@ fun checkingLimits(paymentCardType: Int, amountTransferKop: Int, amountOfPastTra
     }
 }
 
-fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int,): Double {
+fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int): Double {
     return when {
         paymentCardType == 1 && amountOfPastTransfersKop >= LIMIT_MASTERCARD_MAESTRO -> {
             amountTransferKop * TRANSFER_FEE_MASTERCARD_MAESTRO + ADDITIONAL_TRANSFER_FEE_MASTERCARD_MAESTRO
@@ -104,12 +87,12 @@ fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amo
     }
 }
 
-fun transformationCommissionOfText(commission: Double) {
-    if (commission != 0.0) {
+fun transformationCommissionOfText(commission: Double): String {
+    return if (commission != 0.0) {
         val outputRub = (commission / 100).toInt()
         val outputKopek = (commission % 100).toInt()
-        println("Комиссия за перевод $outputRub руб. $outputKopek коп.")
+        "Комиссия за перевод $outputRub руб. $outputKopek коп."
     } else {
-        println("Комиссия за перевод 00 руб. 00 коп.")
+        "Комиссия за перевод 00 руб. 00 коп."
     }
 }
