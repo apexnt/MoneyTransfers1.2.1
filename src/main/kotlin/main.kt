@@ -17,7 +17,6 @@ fun main() {
     val outPaymentCardType = transferConditionsTypeOfCard(paymentCardType)
     println(outPaymentCardType)
 
-
     print("Введите сумму предыдущих переводов в этом месяце:")
     val amountOfPastTransfers = readLine()?.toInt() ?: return
 
@@ -42,7 +41,6 @@ fun main() {
     println("Спасибо за использование \"переводы ВКонтакте\".")
 }
 
-
 fun transferConditionsTypeOfCard(paymentCardType: Int): String {
     return when (paymentCardType) {
         1 -> {
@@ -52,8 +50,7 @@ fun transferConditionsTypeOfCard(paymentCardType: Int): String {
             "Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц"
         }
         else ->
-            "Комиссия за переводы на счет VK Pay - не взимается. Максимальная сумма перевода 15 000 руб. " +
-                    "за один раз и 40 000 руб. в месяц."
+            "Комиссия за переводы на счет VK Pay - не взимается. Максимальная сумма перевода 15 000 руб.\nза один раз и 40 000 руб. в месяц."
     }
 }
 

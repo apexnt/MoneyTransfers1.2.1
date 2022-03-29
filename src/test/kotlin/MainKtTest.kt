@@ -5,6 +5,43 @@ import org.junit.Assert.*
 class MainKtTest {
 
     @Test
+    fun transferConditionsTypeOfCardMastercardMaestro() {
+        val paymentCardType = 1
+        val result = transferConditionsTypeOfCard(
+            paymentCardType = paymentCardType
+        )
+        assertEquals(
+            "За переводы с карт Mastercard и Maestro комиссия не взимается\nпри сумме перевода до 75 000 руб. в календарный месяц, в иных случаях - 0,6% + 20 руб.\nМаксимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц",
+            result
+        )
+    }
+
+    @Test
+    fun transferConditionsTypeOfCardVisaMir() {
+        val paymentCardType = 2
+        val result = transferConditionsTypeOfCard(
+            paymentCardType = paymentCardType
+        )
+        assertEquals(
+            "Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц",
+            result
+        )
+    }
+
+    @Test
+    fun transferConditionsTypeOfCardVKPay() {
+        val paymentCardType = 3
+        val result = transferConditionsTypeOfCard(
+            paymentCardType = paymentCardType
+        )
+        assertEquals(
+            "Комиссия за переводы на счет VK Pay - не взимается. Максимальная сумма перевода 15 000 руб.\nза один раз и 40 000 руб. в месяц.",
+            result
+        )
+    }
+
+
+    @Test
     fun checkingLimitsMastercardMaestroTrue() {
         //arrange
         val paymentCardType = 1
@@ -135,5 +172,23 @@ class MainKtTest {
             amountTransferKop = amountTransferKop
         )
         assertEquals(75_00.0, result, 75_00.0)
+    }
+
+    @Test
+    fun transformationCommissionOfTextZero() {
+        val commission = 0.0
+        val result = transformationCommissionOfText(
+            commission = commission
+        )
+        assertEquals("Комиссия за перевод 00 руб. 00 коп.", result)
+    }
+
+    @Test
+    fun transformationCommissionOfTextNotZero() {
+        val commission = 35_00.0
+        val result = transformationCommissionOfText(
+            commission = commission
+        )
+        assertEquals("Комиссия за перевод 35 руб. 0 коп.", result)
     }
 }
