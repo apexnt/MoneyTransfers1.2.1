@@ -15,6 +15,8 @@ fun main() {
     print("Для Master Card и Maestro введите - 1, для Visa и Мир - 2, для VK Pay - 3: ")
     val paymentCardType = readLine()?.toInt() ?: return
     val outPaymentCardType = transferConditionsTypeOfCard(paymentCardType)
+    println(outPaymentCardType)
+
 
     print("Введите сумму предыдущих переводов в этом месяце:")
     val amountOfPastTransfers = readLine()?.toInt() ?: return
@@ -39,22 +41,38 @@ fun main() {
     println("Спасибо за использование \"переводы ВКонтакте\".")
 }
 
-fun transferConditionsTypeOfCard(paymentCardType: Int) {
-    when (paymentCardType) {
+
+fun transferConditionsTypeOfCard(paymentCardType: Int): String {
+    return when (paymentCardType) {
         1 -> {
-            println("За переводы с карт Mastercard и Maestro комиссия не взимается при сумме перевода до 75 000 руб. ")
-            println("в календарный месяц, в иных случаях - 0,6% + 20 руб. ")
-            println("Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц")
+            "За переводы с карт Mastercard и Maestro комиссия не взимается\nпри сумме перевода до 75 000 руб. в календарный месяц, в иных случаях - 0,6% + 20 руб.\nМаксимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц"
         }
         2 -> {
-            println("Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц")
+            "Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц"
         }
-        else -> println(
+        else ->
             "Комиссия за переводы на счет VK Pay - не взимается. Максимальная сумма перевода 15 000 руб. " +
                     "за один раз и 40 000 руб. в месяц."
-        )
     }
 }
+
+
+//fun transferConditionsTypeOfCard(paymentCardType: Int) {
+//    when (paymentCardType) {
+//        1 -> {
+//            println("За переводы с карт Mastercard и Maestro комиссия не взимается при сумме перевода до 75 000 руб. ")
+//            println("в календарный месяц, в иных случаях - 0,6% + 20 руб. ")
+//            println("Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц")
+//        }
+//        2 -> {
+//            println("Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц")
+//        }
+//        else -> println(
+//            "Комиссия за переводы на счет VK Pay - не взимается. Максимальная сумма перевода 15 000 руб. " +
+//                    "за один раз и 40 000 руб. в месяц."
+//        )
+//    }
+//}
 
 fun checkingLimits(paymentCardType: Int, amountTransferKop: Int, amountOfPastTransfersKop: Int): Boolean {
     return when {
