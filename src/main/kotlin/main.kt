@@ -8,15 +8,14 @@ const val MAX_AMOUNT_TRANSFER_MONTH_CARDS = 600_000_00
 const val MAX_AMOUNT_TRANSFER_VKPAY = 15_000_00
 const val MAX_AMOUNT_TRANSFER_MONTH_VKPAY = 40_000_00
 
-
 fun main() {
     println("Добро пажаловать в \"переводы ВКонтакте\"")
-    print("Выберите тип карты/счета используемых для перевода:")
-    print("Для Master Card и Maestro введите - 1, для Visa и Мир - 2, для VK Pay - 3: ")
-    val paymentCardType = readLine()?.toInt() ?: return
+    println("Выберите тип карты/счета используемых для перевода.")
+    print("Введите, как указано далее: Mastercard, Maestro, Visa, Mir или VKPay: ")
+    val paymentCardType = readLine()
     val outPaymentCardType = transferConditionsTypeOfCard(paymentCardType)
     println(outPaymentCardType)
-
+    val paymentCardTypeForFunctions = typeOfCardForCalculatingFunctions(paymentCardType)
     print("Введите сумму предыдущих переводов в этом месяце:")
     val amountOfPastTransfers = readLine()?.toInt() ?: return
 
@@ -26,14 +25,14 @@ fun main() {
     val amountTransferKop = amountTransfer * 100
     val amountOfPastTransfersKop = amountOfPastTransfers * 100
 
-    val limits = checkingLimits(paymentCardType, amountTransferKop, amountTransferKop)
+    val limits = checkingLimits(paymentCardTypeForFunctions, amountTransferKop, amountTransferKop)
 
     if (!limits) {
         println("Превышен лимит на перевод. Попробуйте другой способ перевода.")
         return
     }
 
-    val commission = transferFee(paymentCardType, amountOfPastTransfersKop, amountTransferKop)
+    val commission = transferFee(paymentCardTypeForFunctions, amountOfPastTransfersKop, amountTransferKop)
 
     val outCommission = transformationCommissionOfText(commission)
 
@@ -41,12 +40,12 @@ fun main() {
     println("Спасибо за использование \"переводы ВКонтакте\".")
 }
 
-fun transferConditionsTypeOfCard(paymentCardType: Int): String {
+fun transferConditionsTypeOfCard(paymentCardType: String?): String {
     return when (paymentCardType) {
-        1 -> {
+        "Mastercard", "Maestro" -> {
             "За переводы с карт Mastercard и Maestro комиссия не взимается\nпри сумме перевода до 75 000 руб. в календарный месяц, в иных случаях - 0,6% + 20 руб.\nМаксимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц"
         }
-        2 -> {
+        "Visa", "Mir" -> {
             "Комиссия за переводы с карт Visa и МИР - 0,75% минимум 35 руб. Максимальная сумма перевода 150 000 руб. в сутки и 600 000 руб. в месяц"
         }
         else ->
@@ -54,26 +53,38 @@ fun transferConditionsTypeOfCard(paymentCardType: Int): String {
     }
 }
 
-fun checkingLimits(paymentCardType: Int, amountTransferKop: Int, amountOfPastTransfersKop: Int): Boolean {
+fun typeOfCardForCalculatingFunctions(paymentCardType: String?): String {
+    return when (paymentCardType) {
+        "Mastercard", "Maestro" -> "mastercard/maestro"
+        "Visa", "Mir" -> "visa/mir"
+        else -> "vkpay"
+    }
+}
+
+fun checkingLimits(paymentCardTypeForFunctions: String, amountTransferKop: Int, amountOfPastTransfersKop: Int): Boolean {
     return when {
-        paymentCardType == 1 && amountTransferKop > MAX_AMOUNT_TRANSFER_DAY_CARDS
-                || paymentCardType == 1 && amountOfPastTransfersKop > MAX_AMOUNT_TRANSFER_MONTH_CARDS -> false
-        paymentCardType == 2 && amountTransferKop > MAX_AMOUNT_TRANSFER_DAY_CARDS
-                || paymentCardType == 2 && amountOfPastTransfersKop > MAX_AMOUNT_TRANSFER_MONTH_CARDS -> false
-        paymentCardType == 3 && amountTransferKop > MAX_AMOUNT_TRANSFER_VKPAY
-                || paymentCardType == 3 && amountOfPastTransfersKop > MAX_AMOUNT_TRANSFER_MONTH_VKPAY -> false
+        paymentCardTypeForFunctions == "mastercard/maestro" && amountTransferKop > MAX_AMOUNT_TRANSFER_DAY_CARDS
+                || paymentCardTypeForFunctions == "mastercard/maestro" && amountOfPastTransfersKop > MAX_AMOUNT_TRANSFER_MONTH_CARDS -> false
+        paymentCardTypeForFunctions == "visa/mir" && amountTransferKop > MAX_AMOUNT_TRANSFER_DAY_CARDS
+                || paymentCardTypeForFunctions == "visa/mir" && amountOfPastTransfersKop > MAX_AMOUNT_TRANSFER_MONTH_CARDS -> false
+        paymentCardTypeForFunctions == "vkpay" && amountTransferKop > MAX_AMOUNT_TRANSFER_VKPAY
+                || paymentCardTypeForFunctions == "vkpay" && amountOfPastTransfersKop > MAX_AMOUNT_TRANSFER_MONTH_VKPAY -> false
         else -> {
             true
         }
     }
 }
 
-fun transferFee(paymentCardType: Int = 3, amountOfPastTransfersKop: Int = 0, amountTransferKop: Int): Double {
+fun transferFee(
+    paymentCardTypeForFunctions: String = "vkpay",
+    amountOfPastTransfersKop: Int = 0,
+    amountTransferKop: Int
+): Double {
     return when {
-        paymentCardType == 1 && amountOfPastTransfersKop >= LIMIT_MASTERCARD_MAESTRO -> {
+        paymentCardTypeForFunctions == "mastercard/maestro" && amountOfPastTransfersKop >= LIMIT_MASTERCARD_MAESTRO -> {
             amountTransferKop * TRANSFER_FEE_MASTERCARD_MAESTRO + ADDITIONAL_TRANSFER_FEE_MASTERCARD_MAESTRO
         }
-        paymentCardType == 2 -> {
+        paymentCardTypeForFunctions == "visa/mir" -> {
             var commissionVisaMir = amountTransferKop * TRANSFER_FEE_VISA_MIR
             if (commissionVisaMir <= MINIMUM_COMMISSION_VISA_MIR) commissionVisaMir = MINIMUM_COMMISSION_VISA_MIR
             return commissionVisaMir

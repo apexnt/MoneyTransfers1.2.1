@@ -6,7 +6,7 @@ class MainKtTest {
 
     @Test
     fun transferConditionsTypeOfCardMastercardMaestro() {
-        val paymentCardType = 1
+        val paymentCardType = "Mastercard"
         val result = transferConditionsTypeOfCard(
             paymentCardType = paymentCardType
         )
@@ -18,7 +18,7 @@ class MainKtTest {
 
     @Test
     fun transferConditionsTypeOfCardVisaMir() {
-        val paymentCardType = 2
+        val paymentCardType = "Visa"
         val result = transferConditionsTypeOfCard(
             paymentCardType = paymentCardType
         )
@@ -30,7 +30,7 @@ class MainKtTest {
 
     @Test
     fun transferConditionsTypeOfCardVKPay() {
-        val paymentCardType = 3
+        val paymentCardType = "vkpay"
         val result = transferConditionsTypeOfCard(
             paymentCardType = paymentCardType
         )
@@ -43,27 +43,24 @@ class MainKtTest {
 
     @Test
     fun checkingLimitsMastercardMaestroTrue() {
-        //arrange
-        val paymentCardType = 1
+        val paymentCardTypeForFunctions = "mastercard/maestro"
         val amountTransferKop = 150_000_00
         val amountOfPastTransfersKop = 600_000_00
-        //act
         val result = checkingLimits(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountTransferKop = amountTransferKop,
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
-        //assert
         assertEquals(true, result)
     }
 
     @Test
     fun checkingLimitsMastercardMaestroFalse() {
-        val paymentCardType = 1
+        val paymentCardTypeForFunctions = "mastercard/maestro"
         val amountTransferKop = 151_000_00
         val amountOfPastTransfersKop = 600_000_00
         val result = checkingLimits(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountTransferKop = amountTransferKop,
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
@@ -72,11 +69,11 @@ class MainKtTest {
 
     @Test
     fun checkingLimitsVisaMirTrue() {
-        val paymentCardType = 2
+        val paymentCardTypeForFunctions = "visa/mir"
         val amountTransferKop = 150_000_00
         val amountOfPastTransfersKop = 600_000_00
         val result = checkingLimits(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountTransferKop = amountTransferKop,
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
@@ -85,11 +82,11 @@ class MainKtTest {
 
     @Test
     fun checkingLimitsVisaMirFalse() {
-        val paymentCardType = 2
+        val paymentCardTypeForFunctions = "visa/mir"
         val amountTransferKop = 151_000_00
         val amountOfPastTransfersKop = 600_000_00
         val result = checkingLimits(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountTransferKop = amountTransferKop,
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
@@ -98,11 +95,11 @@ class MainKtTest {
 
     @Test
     fun checkingLimitsVKPayTrue() {
-        val paymentCardType = 3
+        val paymentCardTypeForFunctions = "vkpay"
         val amountTransferKop = 15_000_00
         val amountOfPastTransfersKop = 40_000_00
         val result = checkingLimits(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountTransferKop = amountTransferKop,
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
@@ -111,11 +108,11 @@ class MainKtTest {
 
     @Test
     fun checkingLimitsVKPayFalse() {
-        val paymentCardType = 3
+        val paymentCardTypeForFunctions = "vkpay"
         val amountTransferKop = 16_000_00
         val amountOfPastTransfersKop = 40_000_00
         val result = checkingLimits(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountTransferKop = amountTransferKop,
             amountOfPastTransfersKop = amountOfPastTransfersKop
         )
@@ -124,11 +121,11 @@ class MainKtTest {
 
     @Test
     fun transferFeeMastercardMaestrolimitExceeded() {
-        val paymentCardType = 1
+        val paymentCardTypeForFunctions = "mastercard/maestro"
         val amountTransferKop = 10_000_00
         val amountOfPastTransfersKop = 75_000_00
         val result = transferFee(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountOfPastTransfersKop = amountOfPastTransfersKop,
             amountTransferKop = amountTransferKop
         )
@@ -137,11 +134,11 @@ class MainKtTest {
 
     @Test
     fun transferFeeMastercardMaestrolimitNotExceeded() {
-        val paymentCardType = 1
+        val paymentCardTypeForFunctions = "mastercard/maestro"
         val amountTransferKop = 10_000_00
         val amountOfPastTransfersKop = 74_000_00
         val result = transferFee(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountOfPastTransfersKop = amountOfPastTransfersKop,
             amountTransferKop = amountTransferKop
         )
@@ -150,11 +147,11 @@ class MainKtTest {
 
     @Test
     fun transferFeeVisaMirMinCommission() {
-        val paymentCardType = 2
+        val paymentCardTypeForFunctions = "visa/mir"
         val amountTransferKop = 3_000_00
         val amountOfPastTransfersKop = 1_000
         val result = transferFee(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountOfPastTransfersKop = amountOfPastTransfersKop,
             amountTransferKop = amountTransferKop
         )
@@ -163,11 +160,11 @@ class MainKtTest {
 
     @Test
     fun transferFeeVisaMirNotMinCommission() {
-        val paymentCardType = 2
+        val paymentCardTypeForFunctions = "visa/mir"
         val amountTransferKop = 10_000_00
         val amountOfPastTransfersKop = 1_000
         val result = transferFee(
-            paymentCardType = paymentCardType,
+            paymentCardTypeForFunctions = paymentCardTypeForFunctions,
             amountOfPastTransfersKop = amountOfPastTransfersKop,
             amountTransferKop = amountTransferKop
         )
