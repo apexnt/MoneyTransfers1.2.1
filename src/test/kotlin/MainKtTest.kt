@@ -40,6 +40,32 @@ class MainKtTest {
         )
     }
 
+    @Test
+    fun typeOfCardForCalculatingFunctionsMastercardMaestro() {
+        val paymentCardType = "Mastercard"
+        val result = typeOfCardForCalculatingFunctions(
+            paymentCardType = paymentCardType
+        )
+        assertEquals("mastercard/maestro", result)
+    }
+
+    @Test
+    fun typeOfCardForCalculatingFunctionsVisaMir() {
+        val paymentCardType = "Visa"
+        val result = typeOfCardForCalculatingFunctions(
+            paymentCardType = paymentCardType
+        )
+        assertEquals("visa/mir", result)
+    }
+
+    @Test
+    fun typeOfCardForCalculatingFunctionsVKPay() {
+        val paymentCardType = "VKPay"
+        val result = typeOfCardForCalculatingFunctions(
+            paymentCardType = paymentCardType
+        )
+        assertEquals("vkpay", result)
+    }
 
     @Test
     fun checkingLimitsMastercardMaestroTrue() {
